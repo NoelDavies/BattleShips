@@ -20,3 +20,6 @@ Next, add the service provider. Open `config/app.php` and add a new item to the 
 ## Usage
 
 This package is accessible via Laravel Facades so to use simply use one of the Facades "Coordinate", "Grid" and "Ship".
+
+## Contributing
+Just fork it and send me a PR. Please don't break my tests :/
