@@ -1,0 +1,27 @@
+{
+  "name": "noeldavies/battleships",
+  "description": "battleships?",
+  "license": "MIT",
+  "keywords": [
+    "game",
+    "battleship"
+  ],
+  "authors": [
+    {
+      "name": "Daniel Noel-Davies",
+      "email": "Daniel@NoelDavi.es",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4"
+  },
+  "autoload": {
+    "psr-4": {
+      "NoelDavies\\BattleShips\\": "src"
+    }
+  }
+}
