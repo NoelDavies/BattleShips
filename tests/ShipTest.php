@@ -18,6 +18,9 @@ class ShipTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($length, 4);
         $this->assertEquals($orientation, Ship::ORIENTATION_HORIZONTAL);
+        $this->assertFalse($ship->isSunk());
+        $this->assertFalse($ship->anyHits());
+        $this->assertEquals($ship->countHits(), 0);
     }
 
     public function testShipOrientation()
@@ -132,5 +135,50 @@ class ShipTest extends PHPUnit_Framework_TestCase {
         foreach ($points as $point) {
             $ship->addPoint($point);
         }
+    }
+
+    public function testCountsHits()
+    {
+        $ship = new Ship(4);
+
+        $points = [
+            new Coordinate(5,1),
+            new Coordinate(4,1)
+        ];
+
+        foreach ($points as $point) {
+            $ship->addPoint($point);
+        }
+
+        $ship->receiveShot(5,1);
+
+        $this->assertEquals($ship->countHits(), 1);
+        $this->assertFalse($ship->isSunk());
+        $this->assertTrue($ship->anyHits());
+    }
+
+    public function testIsSunk()
+    {
+        $ship = new Ship(4);
+
+        $points = [
+            new Coordinate(5,1),
+            new Coordinate(4,1),
+            new Coordinate(3,1),
+            new Coordinate(2,1)
+        ];
+
+        foreach ($points as $point) {
+            $ship->addPoint($point);
+        }
+
+        $ship->receiveShot(5,1);
+        $ship->receiveShot(4,1);
+        $ship->receiveShot(3,1);
+        $ship->receiveShot(2,1);
+
+        $this->assertEquals($ship->countHits(), 4);
+        $this->assertTrue($ship->isSunk());
+        $this->assertTrue($ship->anyHits());
     }
 }

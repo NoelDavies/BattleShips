@@ -151,4 +151,78 @@ class GridTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result_1);
         $this->assertTrue($result_2);
     }
+
+    public function testShotsHitMissSink()
+    {
+        $grid = new Grid(10);
+        $ship1 = new Ship(4, Ship::ORIENTATION_VERTICAL);
+        $grid->placeShip($ship1, 1, 1);
+        $this->assertEquals(Grid::SHOT_MISS, $grid->receiveShot(5, 5));
+        $this->assertEquals(Grid::SHOT_MISS, $grid->receiveShot(8, 4));
+        $this->assertEquals(Grid::SHOT_MISS, $grid->receiveShot(1, 5));
+        $this->assertEquals(Grid::SHOT_HIT, $grid->receiveShot(1, 4));
+        $this->assertEquals(Grid::SHOT_HIT, $grid->receiveShot(1, 3));
+        $this->assertEquals(Grid::SHOT_HIT, $grid->receiveShot(1, 1));
+        $this->assertEquals(Grid::SHOT_SUNK, $grid->receiveShot(1, 2));
+    }
+
+    public function testScoreTracking()
+    {
+        $grid = new Grid(10);
+        $ship1 = new Ship(4, Ship::ORIENTATION_VERTICAL);
+        $grid->placeShip($ship1, 1, 1);
+        $grid->receiveShot(5, 5);
+        $grid->receiveShot(8, 4);
+        $grid->receiveShot(1, 5);
+        $grid->receiveShot(1, 4);
+        $grid->receiveShot(1, 3);
+        $grid->receiveShot(1, 1);
+        $grid->receiveShot(1, 2);
+        $this->assertEquals(7, $grid->getShotsCount());
+        $this->assertEquals(4, $grid->getHitsCount());
+        $this->assertEquals(1, $grid->getSinksCount());
+    }
+
+    public function testBasicOutputBlank()
+    {
+        $grid = new Grid(10);
+        $result = $grid->output();
+        $this->assertEquals(file_get_contents(dirname(__FILE__)  . '/mocks/outputsimple/blank.txt'), $result);
+    }
+
+    public function testBasicOutputHits()
+    {
+        $grid = new Grid(10);
+
+        $grid->receiveShot(0,0);
+        $grid->receiveShot(1,1);
+        $grid->receiveShot(2,2);
+        $grid->receiveShot(3,3);
+        $grid->receiveShot(4,4);
+        $grid->receiveShot(5,5);
+        $grid->receiveShot(6,6);
+        $grid->receiveShot(7,7);
+        $grid->receiveShot(8,8);
+        $grid->receiveShot(9,9);
+        $grid->receiveShot(10,10);
+
+        $result = $grid->output();
+        $this->assertEquals(file_get_contents(dirname(__FILE__)  . '/mocks/outputsimple/misses.txt'), $result);
+    }
+
+    public function testRevealAdvancedOutput()
+    {
+        $grid = new Grid(10);
+
+        $ship1 = new Ship(4);
+        $ship2 = new Ship(4);
+        $ship3 = new Ship(5, Ship::ORIENTATION_VERTICAL);
+
+        $grid->placeShip($ship1, 1,1);
+        $grid->placeShip($ship2, 5,2);
+        $grid->placeShip($ship3, 10,3);
+
+        $result = $grid->reveal();
+        $this->assertEquals(file_get_contents(dirname(__FILE__)  . '/mocks/outputsimple/reveal_ships.txt'), $result);
+    }
 }

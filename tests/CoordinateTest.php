@@ -63,28 +63,28 @@ class CoordinateTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($result);
     }
 
-    public function testSuccessfulRecieveShot()
+    public function testSuccessfulReceiveShot()
     {
         $point = new Coordinate(1,1);
 
         $x = 1;
         $y = 1;
 
-        $result = $point->recieveShot($x, $y);
+        $result = $point->receiveShot($x, $y);
         $coordinateHit = $point->isHit();
 
         $this->assertTrue($result);
         $this->assertTrue($coordinateHit);
     }
 
-    public function testFailedRecieveShot()
+    public function testFailedReceiveShot()
     {
         $point = new Coordinate(1,1);
 
         $x = 2;
         $y = 1;
 
-        $result = $point->recieveShot($x, $y);
+        $result = $point->receiveShot($x, $y);
         $coordinateHit = $point->isHit();
 
         $this->assertFalse($result);

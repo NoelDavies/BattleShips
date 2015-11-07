@@ -87,7 +87,7 @@ class Coordinate
      * @param  integer $y Y coordinate to check for a hit
      * @return boolean    True on hit, false on miss
      */
-    public function recieveShot($x, $y)
+    public function receiveShot($x, $y)
     {
         if ($this->checkShot($x, $y) === true) {
             $this->setHit();

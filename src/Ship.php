@@ -95,6 +95,17 @@ class Ship
         return false;
     }
 
+    public function receiveShot($x, $y)
+    {
+        foreach ($this->points as $point) {
+            if ($point->isHit() === false && $point->receiveShot($x, $y) === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Determine if a point is a valid next point
      * @param  Coordinate  $point Next point to be set
@@ -181,5 +192,26 @@ class Ship
         }
 
         return false;
+    }
+
+    public function isSunk()
+    {
+        return ($this->length == $this->countHits());
+    }
+
+    public function anyHits()
+    {
+        return ($this->countHits() > 0);
+    }
+
+    public function countHits()
+    {
+        $hits = 0;
+        foreach ($this->points as $point) {
+            if ($point->isHit()) {
+                $hits++;
+            }
+        }
+        return $hits;
     }
 }
