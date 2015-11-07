@@ -1,3 +1,6 @@
+[![Latest Stable Version](https://img.shields.io/travis/noeldavies/battleships.svg)](https://packagist.org/packages/noeldavies/battleships)
+[![Total Downloads](https://img.shields.io/packagist/dt/noeldavies/battleships.svg)](https://packagist.org/packages/noeldavies/battleships)
+[![License](https://poser.pugx.org/noeldavies/battleships/license)](https://packagist.org/packages/noeldavies/battleships)
 # BattleShips
 
 This package provides a convenient library for playing BattleShips. Be it simulations, live games or you're trying to create a scene from the film wargames!
