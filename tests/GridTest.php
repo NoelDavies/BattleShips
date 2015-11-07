@@ -194,7 +194,6 @@ class GridTest extends PHPUnit_Framework_TestCase {
     {
         $grid = new Grid(10);
 
-        $grid->receiveShot(0,0);
         $grid->receiveShot(1,1);
         $grid->receiveShot(2,2);
         $grid->receiveShot(3,3);
@@ -224,5 +223,16 @@ class GridTest extends PHPUnit_Framework_TestCase {
 
         $result = $grid->reveal();
         $this->assertEquals(file_get_contents(dirname(__FILE__)  . '/mocks/outputsimple/reveal_ships.txt'), $result);
+    }
+
+    public function testActualOutputTest()
+    {
+        $grid = new Grid(10);
+        $grid->setOutputClass('NoelDavies\BattleShips\GridOutputTest');
+
+        $grid->receiveShot(1,1);
+
+        $result = $grid->output();
+        $this->assertEquals(file_get_contents(dirname(__FILE__)  . '/mocks/outputsimple/1_1_test.txt'), $result);
     }
 }

@@ -159,7 +159,7 @@ class Grid {
     }
 
     /**
-     * Return different status code depending on outcome of shot     *
+     * Return different status code depending on outcome of shot
      * @return int
      */
     public function receiveShot($x, $y)
