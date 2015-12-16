@@ -1,18 +1,17 @@
 <?php
 
 use NoelDavies\BattleShips\Coordinate;
-use NoelDavies\BattleShips\Exception\InvalidCoordinateException;
 
-class CoordinateTest extends PHPUnit_Framework_TestCase {
-
+class CoordinateTest extends PHPUnit_Framework_TestCase
+{
     public function testGridCreate()
     {
-        $this->assertInstanceOf('NoelDavies\BattleShips\Coordinate', new Coordinate(1,1));
+        $this->assertInstanceOf('NoelDavies\BattleShips\Coordinate', new Coordinate(1, 1));
     }
 
     public function testInitialValues()
     {
-        $point = new Coordinate(1,2);
+        $point = new Coordinate(1, 2);
 
         $this->assertFalse($point->isHit());
         $this->assertEquals($point->getPositionX(), 1);
@@ -30,7 +29,7 @@ class CoordinateTest extends PHPUnit_Framework_TestCase {
 
     public function testSetHit()
     {
-        $point = new Coordinate(1,1);
+        $point = new Coordinate(1, 1);
         $point->setHit();
         $result = $point->isHit();
 
@@ -39,12 +38,12 @@ class CoordinateTest extends PHPUnit_Framework_TestCase {
 
     public function testSuccessfulHit()
     {
-        $point = new Coordinate(1,1);
+        $point = new Coordinate(1, 1);
 
         $x = 1;
         $y = 1;
 
-        $result        = $point->checkShot($x, $y);
+        $result = $point->checkShot($x, $y);
         $coordinateHit = $point->isHit();
 
         $this->assertTrue($result);
@@ -53,7 +52,7 @@ class CoordinateTest extends PHPUnit_Framework_TestCase {
 
     public function testFailedHit()
     {
-        $point = new Coordinate(1,1);
+        $point = new Coordinate(1, 1);
 
         $x = 2;
         $y = 1;
@@ -65,7 +64,7 @@ class CoordinateTest extends PHPUnit_Framework_TestCase {
 
     public function testSuccessfulReceiveShot()
     {
-        $point = new Coordinate(1,1);
+        $point = new Coordinate(1, 1);
 
         $x = 1;
         $y = 1;
@@ -79,7 +78,7 @@ class CoordinateTest extends PHPUnit_Framework_TestCase {
 
     public function testFailedReceiveShot()
     {
-        $point = new Coordinate(1,1);
+        $point = new Coordinate(1, 1);
 
         $x = 2;
         $y = 1;

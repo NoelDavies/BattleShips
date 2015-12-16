@@ -16,15 +16,15 @@ class GridOutputTest implements GridOutputInterface
         $this->history = $grid->getHistory();
         $this->grid = $grid;
 
-        $output = '  1234567890' . "\n";
+        $output = '  1234567890'."\n";
         $size = $grid->getSize();
 
-        for ($y=1; $y <= $size; $y++) {
-            $output .= $this->numberToLetter($y) . " ";
-            for ($x=1; $x <= $size; $x++) {
+        for ($y = 1; $y <= $size; $y++) {
+            $output .= $this->numberToLetter($y).' ';
+            for ($x = 1; $x <= $size; $x++) {
                 $output .= $this->getPlayableColumn($x, $y);
             }
-            if( $size != $y ) {
+            if ($size != $y) {
                 $output .= "\n";
             }
         }
@@ -35,7 +35,8 @@ class GridOutputTest implements GridOutputInterface
     public function numberToLetter($i)
     {
         $alpha = range('A', 'Z');
-        return $alpha[$i-1];
+
+        return $alpha[$i - 1];
     }
 
     public function getPlayableColumn($x, $y)
@@ -44,15 +45,16 @@ class GridOutputTest implements GridOutputInterface
             $pos = $entry['GUESS'];
 
             if ($pos->getPositionY() === $y && $pos->getPositionX() === $x) {
-                if ( $entry['RESULT'] === Grid::SHOT_HIT) {
+                if ($entry['RESULT'] === Grid::SHOT_HIT) {
                     return self::TILE_HIT;
                 }
 
-                if ( $entry['RESULT'] === Grid::SHOT_MISS) {
+                if ($entry['RESULT'] === Grid::SHOT_MISS) {
                     return self::TILE_MISS;
                 }
             }
         }
+
         return self::TILE_UNKNOWN;
     }
 
@@ -60,11 +62,10 @@ class GridOutputTest implements GridOutputInterface
     {
         $output = '';
         $points = $this->getPointsOfShips($grid);
-        $size   = $grid->getSize();
+        $size = $grid->getSize();
 
-        for ($y=1; $y <= $size; $y++) {
-            for ($x=1; $x <= $size; $x++) {
-
+        for ($y = 1; $y <= $size; $y++) {
+            for ($x = 1; $x <= $size; $x++) {
                 $tile = self::TILE_UNKNOWN;
 
                 foreach ($points as $point) {
@@ -76,7 +77,7 @@ class GridOutputTest implements GridOutputInterface
                 $output .= $tile;
                 $tile = null;
             }
-            if( $size != $y ) {
+            if ($size != $y) {
                 $output .= "\n";
             }
         }

@@ -19,11 +19,10 @@ class GridOutputTable implements GridOutputInterface
         $output = '<table>';
         $size = $grid->getSize();
 
-        for ($y=1; $y <= $size; $y++) {
-
+        for ($y = 1; $y <= $size; $y++) {
             $output .= '<tr>';
 
-            for ($x=1; $x <= $size; $x++) {
+            for ($x = 1; $x <= $size; $x++) {
                 $output .= $this->getPlayableColumn($x, $y);
             }
 
@@ -39,15 +38,16 @@ class GridOutputTable implements GridOutputInterface
             $pos = $entry['GUESS'];
 
             if ($pos->getPositionY() === $y && $pos->getPositionX() === $x) {
-                if ( $entry['RESULT'] === Grid::SHOT_HIT) {
+                if ($entry['RESULT'] === Grid::SHOT_HIT) {
                     return $this->asCell(self::TILE_HIT);
                 }
 
-                if ( $entry['RESULT'] === Grid::SHOT_MISS) {
+                if ($entry['RESULT'] === Grid::SHOT_MISS) {
                     return $this->asCell(self::TILE_MISS);
                 }
             }
         }
+
         return $this->asCell(self::TILE_UNKNOWN);
     }
 
@@ -55,11 +55,11 @@ class GridOutputTable implements GridOutputInterface
     {
         $output = '<table>';
         $points = $this->getPointsOfShips($grid);
-        $size   = $grid->getSize();
+        $size = $grid->getSize();
 
-        for ($y=1; $y <= $size; $y++) {
+        for ($y = 1; $y <= $size; $y++) {
             $output .= '<tr>';
-            for ($x=1; $x <= $size; $x++) {
+            for ($x = 1; $x <= $size; $x++) {
                 $tile = self::TILE_UNKNOWN;
 
                 foreach ($points as $point) {
@@ -74,7 +74,7 @@ class GridOutputTable implements GridOutputInterface
             $output .= '</tr>';
         }
 
-        return $output . '</table>';
+        return $output.'</table>';
     }
 
     public function getPointsOfShips($grid)
@@ -90,6 +90,6 @@ class GridOutputTable implements GridOutputInterface
 
     public function asCell($value)
     {
-        return '<td style="text-align: center; font-weight: bold;">' . $value . '</td>';
+        return '<td style="text-align: center; font-weight: bold;">'.$value.'</td>';
     }
 }

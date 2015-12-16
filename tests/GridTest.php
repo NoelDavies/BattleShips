@@ -3,8 +3,8 @@
 use NoelDavies\BattleShips\Grid;
 use NoelDavies\BattleShips\Ship;
 
-class GridTest extends PHPUnit_Framework_TestCase {
-
+class GridTest extends PHPUnit_Framework_TestCase
+{
     public function testGridCreate()
     {
         $this->assertInstanceOf('NoelDavies\BattleShips\Grid', new Grid(10));
@@ -146,7 +146,7 @@ class GridTest extends PHPUnit_Framework_TestCase {
         $battleship_2 = new Ship(5, Ship::ORIENTATION_VERTICAL);
 
         $result_1 = $grid->placeShip($battleship_1, 3, 3);
-        $result_2 = $grid->placeship($battleship_2, 1,1);
+        $result_2 = $grid->placeship($battleship_2, 1, 1);
 
         $this->assertTrue($result_1);
         $this->assertTrue($result_2);
@@ -187,26 +187,26 @@ class GridTest extends PHPUnit_Framework_TestCase {
     {
         $grid = new Grid(10);
         $result = $grid->output();
-        $this->assertEquals(file_get_contents(dirname(__FILE__)  . '/mocks/outputsimple/blank.txt'), $result);
+        $this->assertEquals(file_get_contents(dirname(__FILE__).'/mocks/outputsimple/blank.txt'), $result);
     }
 
     public function testBasicOutputHits()
     {
         $grid = new Grid(10);
 
-        $grid->receiveShot(1,1);
-        $grid->receiveShot(2,2);
-        $grid->receiveShot(3,3);
-        $grid->receiveShot(4,4);
-        $grid->receiveShot(5,5);
-        $grid->receiveShot(6,6);
-        $grid->receiveShot(7,7);
-        $grid->receiveShot(8,8);
-        $grid->receiveShot(9,9);
-        $grid->receiveShot(10,10);
+        $grid->receiveShot(1, 1);
+        $grid->receiveShot(2, 2);
+        $grid->receiveShot(3, 3);
+        $grid->receiveShot(4, 4);
+        $grid->receiveShot(5, 5);
+        $grid->receiveShot(6, 6);
+        $grid->receiveShot(7, 7);
+        $grid->receiveShot(8, 8);
+        $grid->receiveShot(9, 9);
+        $grid->receiveShot(10, 10);
 
         $result = $grid->output();
-        $this->assertEquals(file_get_contents(dirname(__FILE__)  . '/mocks/outputsimple/misses.txt'), $result);
+        $this->assertEquals(file_get_contents(dirname(__FILE__).'/mocks/outputsimple/misses.txt'), $result);
     }
 
     public function testRevealAdvancedOutput()
@@ -217,12 +217,12 @@ class GridTest extends PHPUnit_Framework_TestCase {
         $ship2 = new Ship(4);
         $ship3 = new Ship(5, Ship::ORIENTATION_VERTICAL);
 
-        $grid->placeShip($ship1, 1,1);
-        $grid->placeShip($ship2, 5,2);
-        $grid->placeShip($ship3, 10,3);
+        $grid->placeShip($ship1, 1, 1);
+        $grid->placeShip($ship2, 5, 2);
+        $grid->placeShip($ship3, 10, 3);
 
         $result = $grid->reveal();
-        $this->assertEquals(file_get_contents(dirname(__FILE__)  . '/mocks/outputsimple/reveal_ships.txt'), $result);
+        $this->assertEquals(file_get_contents(dirname(__FILE__).'/mocks/outputsimple/reveal_ships.txt'), $result);
     }
 
     public function testActualOutputTest()
@@ -230,9 +230,9 @@ class GridTest extends PHPUnit_Framework_TestCase {
         $grid = new Grid(10);
         $grid->setOutputClass('NoelDavies\BattleShips\GridOutputTest');
 
-        $grid->receiveShot(1,1);
+        $grid->receiveShot(1, 1);
 
         $result = $grid->output();
-        $this->assertEquals(file_get_contents(dirname(__FILE__)  . '/mocks/outputsimple/1_1_test.txt'), $result);
+        $this->assertEquals(file_get_contents(dirname(__FILE__).'/mocks/outputsimple/1_1_test.txt'), $result);
     }
 }
