@@ -19,11 +19,11 @@ class GridOutputSimple implements GridOutputInterface
         $output = '';
         $size = $grid->getSize();
 
-        for ($y=1; $y <= $size; $y++) {
-            for ($x=1; $x <= $size; $x++) {
+        for ($y = 1; $y <= $size; $y++) {
+            for ($x = 1; $x <= $size; $x++) {
                 $output .= $this->getPlayableColumn($x, $y);
             }
-            if( $size != $y ) {
+            if ($size != $y) {
                 $output .= "\n";
             }
         }
@@ -37,15 +37,16 @@ class GridOutputSimple implements GridOutputInterface
             $pos = $entry['GUESS'];
 
             if ($pos->getPositionY() === $y && $pos->getPositionX() === $x) {
-                if ( $entry['RESULT'] === Grid::SHOT_HIT) {
+                if ($entry['RESULT'] === Grid::SHOT_HIT) {
                     return self::TILE_HIT;
                 }
 
-                if ( $entry['RESULT'] === Grid::SHOT_MISS) {
+                if ($entry['RESULT'] === Grid::SHOT_MISS) {
                     return self::TILE_MISS;
                 }
             }
         }
+
         return self::TILE_UNKNOWN;
     }
 
@@ -53,11 +54,10 @@ class GridOutputSimple implements GridOutputInterface
     {
         $output = '';
         $points = $this->getPointsOfShips($grid);
-        $size   = $grid->getSize();
+        $size = $grid->getSize();
 
-        for ($y=1; $y <= $size; $y++) {
-            for ($x=1; $x <= $size; $x++) {
-
+        for ($y = 1; $y <= $size; $y++) {
+            for ($x = 1; $x <= $size; $x++) {
                 $tile = self::TILE_UNKNOWN;
 
                 foreach ($points as $point) {
@@ -69,7 +69,7 @@ class GridOutputSimple implements GridOutputInterface
                 $output .= $tile;
                 $tile = null;
             }
-            if( $size != $y ) {
+            if ($size != $y) {
                 $output .= "\n";
             }
         }

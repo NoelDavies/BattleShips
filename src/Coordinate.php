@@ -5,32 +5,34 @@ namespace NoelDavies\BattleShips;
 use NoelDavies\BattleShips\Exception\InvalidCoordinateException;
 
 /**
-* Define a position on the grid
-*/
+ * Define a position on the grid.
+ */
 class Coordinate
 {
-
     /**
-     * X position on the board
+     * X position on the board.
+     *
      * @var int
      */
     private $x;
 
     /**
-     * Y position on the board
+     * Y position on the board.
+     *
      * @var int
      */
     private $y;
 
     /**
-     * Boolean value repesenting if this point is a hit
-     * @var boolean
+     * Boolean value repesenting if this point is a hit.
+     *
+     * @var bool
      */
     private $isHit = false;
 
     public function __construct($x, $y)
     {
-        if (!is_int( $x ) || !is_int( $y )) {
+        if (!is_int($x) || !is_int($y)) {
             throw new InvalidCoordinateException($x, $y);
         }
 
@@ -49,8 +51,9 @@ class Coordinate
     }
 
     /**
-     * Check if this Coordinate is a hit or not
-     * @return boolean
+     * Check if this Coordinate is a hit or not.
+     *
+     * @return bool
      */
     public function isHit()
     {
@@ -58,8 +61,9 @@ class Coordinate
     }
 
     /**
-     * Set the current point to a hit
-     * @return boolean
+     * Set the current point to a hit.
+     *
+     * @return bool
      */
     public function setHit()
     {
@@ -67,10 +71,12 @@ class Coordinate
     }
 
     /**
-     * Check if the coordinates are a hit without affecting this coordinate
-     * @param  integer $x X coordinate to check for a hit
-     * @param  integer $y Y coordinate to check for a hit
-     * @return boolean    true on hit, false on miss
+     * Check if the coordinates are a hit without affecting this coordinate.
+     *
+     * @param int $x X coordinate to check for a hit
+     * @param int $y Y coordinate to check for a hit
+     *
+     * @return bool true on hit, false on miss
      */
     public function checkShot($x, $y)
     {
@@ -82,10 +88,12 @@ class Coordinate
     }
 
     /**
-     * Check a shot and affect the status of this coordinate
-     * @param  integer $x X coordinate to check for a hit
-     * @param  integer $y Y coordinate to check for a hit
-     * @return boolean    True on hit, false on miss
+     * Check a shot and affect the status of this coordinate.
+     *
+     * @param int $x X coordinate to check for a hit
+     * @param int $y Y coordinate to check for a hit
+     *
+     * @return bool True on hit, false on miss
      */
     public function receiveShot($x, $y)
     {

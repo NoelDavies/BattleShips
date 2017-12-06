@@ -3,8 +3,8 @@
 use NoelDavies\BattleShips\Coordinate;
 use NoelDavies\BattleShips\Ship;
 
-class ShipTest extends PHPUnit_Framework_TestCase {
-
+class ShipTest extends PHPUnit_Framework_TestCase
+{
     public function testShipCreate()
     {
         $this->assertInstanceOf('NoelDavies\BattleShips\Ship', new Ship(4));
@@ -51,8 +51,8 @@ class ShipTest extends PHPUnit_Framework_TestCase {
 
     public function testPointsCanBeAddedToAShip()
     {
-        $point = new Coordinate(1,2);
-        $ship  = new Ship(4);
+        $point = new Coordinate(1, 2);
+        $ship = new Ship(4);
 
         $ship->addPoint($point);
         $this->assertEquals($ship->getPoints(), [$point]);
@@ -60,9 +60,9 @@ class ShipTest extends PHPUnit_Framework_TestCase {
 
     public function testMultiplePointsCanBeAddedToAShip()
     {
-        $point    = new Coordinate(1,1);
-        $newPoint = new Coordinate(2,1);
-        $ship     = new Ship(4);
+        $point = new Coordinate(1, 1);
+        $newPoint = new Coordinate(2, 1);
+        $ship = new Ship(4);
 
         $ship->addPoint($point);
         $ship->addPoint($newPoint);
@@ -76,12 +76,12 @@ class ShipTest extends PHPUnit_Framework_TestCase {
     public function testShipsAreKeptTrueToOrientation()
     {
         $points = [
-            new Coordinate(1,1),
-            new Coordinate(2,1),
-            new Coordinate(3,5)
+            new Coordinate(1, 1),
+            new Coordinate(2, 1),
+            new Coordinate(3, 5),
         ];
 
-        $ship     = new Ship(4);
+        $ship = new Ship(4);
 
         foreach ($points as $point) {
             $ship->addPoint($point);
@@ -93,17 +93,17 @@ class ShipTest extends PHPUnit_Framework_TestCase {
         $ship = new Ship(4);
 
         $points = [
-            new Coordinate(1,1),
-            new Coordinate(2,1),
-            new Coordinate(3,1),
-            new Coordinate(4,1)
+            new Coordinate(1, 1),
+            new Coordinate(2, 1),
+            new Coordinate(3, 1),
+            new Coordinate(4, 1),
         ];
 
         foreach ($points as $point) {
             $ship->addPoint($point);
         }
 
-        $result = $ship->isNextValidPoint(new Coordinate(5,1));
+        $result = $ship->isNextValidPoint(new Coordinate(5, 1));
         $this->assertFalse($result);
     }
 
@@ -111,9 +111,9 @@ class ShipTest extends PHPUnit_Framework_TestCase {
     {
         $ship = new Ship(4);
 
-        $ship->addPoint(new Coordinate(1,1));
+        $ship->addPoint(new Coordinate(1, 1));
 
-        $result = $ship->isNextValidPoint(new Coordinate(1,1));
+        $result = $ship->isNextValidPoint(new Coordinate(1, 1));
         $this->assertFalse($result);
     }
 
@@ -126,10 +126,10 @@ class ShipTest extends PHPUnit_Framework_TestCase {
         $ship = new Ship(4);
 
         $points = [
-            new Coordinate(5,1),
-            new Coordinate(3,1),
-            new Coordinate(1,1),
-            new Coordinate(4,1)
+            new Coordinate(5, 1),
+            new Coordinate(3, 1),
+            new Coordinate(1, 1),
+            new Coordinate(4, 1),
         ];
 
         foreach ($points as $point) {
@@ -142,15 +142,15 @@ class ShipTest extends PHPUnit_Framework_TestCase {
         $ship = new Ship(4);
 
         $points = [
-            new Coordinate(5,1),
-            new Coordinate(4,1)
+            new Coordinate(5, 1),
+            new Coordinate(4, 1),
         ];
 
         foreach ($points as $point) {
             $ship->addPoint($point);
         }
 
-        $ship->receiveShot(5,1);
+        $ship->receiveShot(5, 1);
 
         $this->assertEquals($ship->countHits(), 1);
         $this->assertFalse($ship->isSunk());
@@ -162,20 +162,20 @@ class ShipTest extends PHPUnit_Framework_TestCase {
         $ship = new Ship(4);
 
         $points = [
-            new Coordinate(5,1),
-            new Coordinate(4,1),
-            new Coordinate(3,1),
-            new Coordinate(2,1)
+            new Coordinate(5, 1),
+            new Coordinate(4, 1),
+            new Coordinate(3, 1),
+            new Coordinate(2, 1),
         ];
 
         foreach ($points as $point) {
             $ship->addPoint($point);
         }
 
-        $ship->receiveShot(5,1);
-        $ship->receiveShot(4,1);
-        $ship->receiveShot(3,1);
-        $ship->receiveShot(2,1);
+        $ship->receiveShot(5, 1);
+        $ship->receiveShot(4, 1);
+        $ship->receiveShot(3, 1);
+        $ship->receiveShot(2, 1);
 
         $this->assertEquals($ship->countHits(), 4);
         $this->assertTrue($ship->isSunk());

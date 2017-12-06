@@ -2,50 +2,54 @@
 
 namespace NoelDavies\BattleShips;
 
-use NoelDavies\BattleShips\Coordinate;
-use NoelDavies\BattleShips\Ship;
-use NoelDavies\BattleShips\Exception\PlacementException;
 use NoelDavies\BattleShips\Exception\PlacementCollisionException;
+use NoelDavies\BattleShips\Exception\PlacementException;
 
-class Grid {
-
+class Grid
+{
     const SHOT_MISS = 1;
     const SHOT_HIT = 2;
     const SHOT_SUNK = 3;
 
     /**
-     * Length of one side of the board
-     * @var integer
+     * Length of one side of the board.
+     *
+     * @var int
      */
     private $size;
 
     /**
-     * Historical log of shots on this board
+     * Historical log of shots on this board.
+     *
      * @var array
      */
     private $history = [];
 
     /**
-     * Ships on the current grid
+     * Ships on the current grid.
+     *
      * @var Ship[]
      */
     private $ships = [];
 
     /**
      * For when those insults go flying!
-     * @var integer
+     *
+     * @var int
      */
     private $shotsFired = 0;
 
     /**
-     * Number of shots that have hit
-     * @var integer
+     * Number of shots that have hit.
+     *
+     * @var int
      */
     private $shotsHit = 0;
 
     /**
-     * Number of shots that have caused a ship to sink
-     * @var integer
+     * Number of shots that have caused a ship to sink.
+     *
+     * @var int
      */
     private $shotsSunk = 0;
 
@@ -57,7 +61,7 @@ class Grid {
         $this->setOutputClass('NoelDavies\BattleShips\GridOutputSimple');
     }
 
-    public function setOutputClass( $writer )
+    public function setOutputClass($writer)
     {
         if (class_exists($writer) === false) {
             throw new OutputWriterException($writer);
@@ -71,11 +75,13 @@ class Grid {
     }
 
     /**
-     * Places a ship on the current grid
-     * @param  Ship   $ship Instance of the ship
-     * @param  integer $x    X-Coordinate of the Bow (front) of the ship
-     * @param  integer $y    Y-Coordinate of the Bow (front) of the ship
-     * @return boolean       True on successful ship placement, False on failure
+     * Places a ship on the current grid.
+     *
+     * @param Ship $ship Instance of the ship
+     * @param int  $x    X-Coordinate of the Bow (front) of the ship
+     * @param int  $y    Y-Coordinate of the Bow (front) of the ship
+     *
+     * @return bool True on successful ship placement, False on failure
      */
     public function placeShip(Ship $ship, $x, $y)
     {
@@ -86,8 +92,8 @@ class Grid {
 
         switch ($ship->getOrientation()) {
             case Ship::ORIENTATION_HORIZONTAL:
-                for ($i=1; $i < $length; $i++) {
-                    $newX = $x+$i;
+                for ($i = 1; $i < $length; $i++) {
+                    $newX = $x + $i;
                     $newY = $y;
                     $this->fitShip($newX, $newY);
                     $ship->addPoint(new Coordinate($newX, $newY));
@@ -95,9 +101,9 @@ class Grid {
                 break;
 
             case Ship::ORIENTATION_VERTICAL:
-                for ($i=1; $i < $length; $i++) {
+                for ($i = 1; $i < $length; $i++) {
                     $newX = $x;
-                    $newY = $y+$i;
+                    $newY = $y + $i;
                     $this->fitShip($newX, $newY);
                     $ship->addPoint(new Coordinate($newX, $newY));
                 }
@@ -110,7 +116,8 @@ class Grid {
     }
 
     /**
-     * Retrieve all the ships on the grid
+     * Retrieve all the ships on the grid.
+     *
      * @return Ship[] Array of ships on the grid
      */
     public function getShips()
@@ -119,9 +126,11 @@ class Grid {
     }
 
     /**
-     * Check if the ship fits on the board without collisions
-     * @param  integer $x X coord of the bow of the ship
-     * @param  integer $y Y coord of the bow of the ship
+     * Check if the ship fits on the board without collisions.
+     *
+     * @param int $x X coord of the bow of the ship
+     * @param int $y Y coord of the bow of the ship
+     *
      * @return void
      */
     public function fitShip($x, $y)
@@ -131,9 +140,11 @@ class Grid {
     }
 
     /**
-     * Check the coord is within the bounds of the grid
-     * @param  integer $x X coordinate
-     * @param  integer $y Y coordinate
+     * Check the coord is within the bounds of the grid.
+     *
+     * @param int $x X coordinate
+     * @param int $y Y coordinate
+     *
      * @return void
      */
     private function checkBounds($x, $y)
@@ -144,9 +155,11 @@ class Grid {
     }
 
     /**
-     * Check that a new ship won't collide with one already placed down
-     * @param  integer $x X coordinate
-     * @param  integer $y Y coordinate
+     * Check that a new ship won't collide with one already placed down.
+     *
+     * @param int $x X coordinate
+     * @param int $y Y coordinate
+     *
      * @return void
      */
     private function checkShipCollision($x, $y)
@@ -159,7 +172,8 @@ class Grid {
     }
 
     /**
-     * Return different status code depending on outcome of shot
+     * Return different status code depending on outcome of shot.
+     *
      * @return int
      */
     public function receiveShot($x, $y)
@@ -168,9 +182,7 @@ class Grid {
         $result = self::SHOT_MISS;
 
         foreach ($this->ships as $ship) {
-
             if ($ship->receiveShot($x, $y)) {
-
                 $this->shotsHit++;
                 $result = self::SHOT_HIT;
 
@@ -182,8 +194,8 @@ class Grid {
         }
 
         $this->history[] = [
-            'GUESS' => new Coordinate($x, $y),
-            'RESULT' => $result
+            'GUESS'  => new Coordinate($x, $y),
+            'RESULT' => $result,
         ];
 
         return $result;
@@ -195,8 +207,9 @@ class Grid {
     }
 
     /**
-     * Recieve the number of shots fired on this grid
-     * @return integer
+     * Recieve the number of shots fired on this grid.
+     *
+     * @return int
      */
     public function getShotsCount()
     {
@@ -204,8 +217,9 @@ class Grid {
     }
 
     /**
-     * Get the history of the shots
-     * @return integer
+     * Get the history of the shots.
+     *
+     * @return int
      */
     public function getHistory()
     {
@@ -213,8 +227,9 @@ class Grid {
     }
 
     /**
-     * Retrieve the number of shots that have resulted in a hit on this grid
-     * @return integer
+     * Retrieve the number of shots that have resulted in a hit on this grid.
+     *
+     * @return int
      */
     public function getHitsCount()
     {
@@ -222,8 +237,9 @@ class Grid {
     }
 
     /**
-     * Retrieve the number of shots that have resulted in sinkages
-     * @return integer
+     * Retrieve the number of shots that have resulted in sinkages.
+     *
+     * @return int
      */
     public function getSinksCount()
     {
@@ -232,13 +248,15 @@ class Grid {
 
     public function output()
     {
-        $writer = new $this->outputWriter;
-        return $writer->output( $this );
+        $writer = new $this->outputWriter();
+
+        return $writer->output($this);
     }
 
     public function reveal()
     {
-        $writer = new $this->outputWriter;
-        return $writer->reveal( $this );
+        $writer = new $this->outputWriter();
+
+        return $writer->reveal($this);
     }
 }
